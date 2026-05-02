@@ -2105,16 +2105,19 @@ function getAvailableLines() {
     });
   });
 
-  (sessions || []).forEach(s => {
+  (sessions || [])
+  .filter(s => !s.site_id || s.site_id === QUALPACK_SITE_ID)
+  .forEach(s => {
     const line = String((s && (s.ligne_prod || s.ligne)) || '').trim();
     if (line) set.add(line);
   });
 
-  (dets || []).forEach(d => {
+(dets || [])
+  .filter(d => !d.site_id || d.site_id === QUALPACK_SITE_ID)
+  .forEach(d => {
     const line = String((d && (d.ligne_prod || d.ligne)) || '').trim();
     if (line) set.add(line);
   });
-
   return Array.from(set).sort((a,b) => a.localeCompare(b, 'fr', {sensitivity:'base'}));
 }
 
