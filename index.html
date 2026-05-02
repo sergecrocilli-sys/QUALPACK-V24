@@ -1878,9 +1878,15 @@ function escapeHtml(str) {
 
 
 function qpSiteStorageKey(base) {
-  const site = (typeof QUALPACK_SITE_ID !== 'undefined' && QUALPACK_SITE_ID)
-    ? QUALPACK_SITE_ID
-    : 'default';
+  const site =
+    (window.QUALPACK_SITE_ID)
+      ? window.QUALPACK_SITE_ID
+      : (
+          localStorage.getItem('qp_site_id') ||
+          new URLSearchParams(window.location.search).get('site_id') ||
+          'default'
+        );
+
   return `${base}_${site}`;
 }
 
