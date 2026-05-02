@@ -5168,7 +5168,7 @@ async function loadCatalogueFromSupabase() {
 
       if (Object.keys(nextCatalogue).length) {
         CATALOGUE = sanitizeCatalogue(nextCatalogue);
-        localStorage.setItem('qp_catalogue', JSON.stringify(CATALOGUE));
+        localStorage.setItem(qpCacheKey('qp_catalogue'), JSON.stringify(CATALOGUE));
       }
     } else {
       console.warn('Catalogue Supabase vide, conservation du catalogue local');
