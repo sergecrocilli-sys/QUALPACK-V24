@@ -5203,8 +5203,8 @@ async function loadCatalogueFromSupabase() {
 /* ── Charger depuis cache local (fallback offline) ── */
 function loadCatalogueFromCache() {
   try {
-    const cat = localStorage.getItem('qp_catalogue');
-    const ops = localStorage.getItem('qp_operateurs');
+    const cat = localStorage.getItem(qpCacheKey('qp_catalogue'));
+    const ops = localStorage.getItem(qpCacheKey('qp_operateurs'));
     getStoredLineCatalogue();
     if (cat) CATALOGUE = sanitizeCatalogue(JSON.parse(cat));
     if (ops) OPERATEURS = mergeOperateursLists(JSON.parse(ops), OPERATEURS);
