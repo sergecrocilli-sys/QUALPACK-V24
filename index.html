@@ -5044,13 +5044,24 @@ function calcSeuils(qn) {
 
 }
 
+function qpCacheKey(base) {
+  const site = (typeof QUALPACK_SITE_ID !== 'undefined' && QUALPACK_SITE_ID)
+    ? QUALPACK_SITE_ID
+    : 'default';
+  return `${base}_${site}`;
+}
+
 function getLocalOperateursCache() {
   try {
-    const raw = JSON.parse(localStorage.getItem('qp_operateurs') || '[]');
+    const raw = JSON.parse(localStorage.getItem(qpCacheKey('qp_operateurs')) || '[]');
     return Array.isArray(raw) ? raw : [];
   } catch(e) {
     return [];
   }
+}
+
+function saveLocalOperateursCache(items) {
+  localStorage.setItem(qpCacheKey('qp_operateurs'), JSON.stringify(items || []));
 }
 
 function saveLocalOperateursCache(items) {
