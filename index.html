@@ -1877,9 +1877,16 @@ function escapeHtml(str) {
 }
 
 
-const LINE_DETECTEUR_STORAGE_KEY = 'qp_line_detecteurs';
-const LINE_CATALOGUE_STORAGE_KEY = 'qp_lines_catalogue';
-const DETECTEUR_CATALOGUE_STORAGE_KEY = 'qp_detecteurs_catalogue';
+function qpSiteStorageKey(base) {
+  const site = (typeof QUALPACK_SITE_ID !== 'undefined' && QUALPACK_SITE_ID)
+    ? QUALPACK_SITE_ID
+    : 'default';
+  return `${base}_${site}`;
+}
+
+const LINE_DETECTEUR_STORAGE_KEY = qpSiteStorageKey('qp_line_detecteurs');
+const LINE_CATALOGUE_STORAGE_KEY = qpSiteStorageKey('qp_lines_catalogue');
+const DETECTEUR_CATALOGUE_STORAGE_KEY = qpSiteStorageKey('qp_detecteurs_catalogue');
 let detecteurManualOverride = false;
 let detecteurAutoFilledValue = '';
 
