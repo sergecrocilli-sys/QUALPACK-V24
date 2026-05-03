@@ -1,4 +1,4 @@
-const CACHE_NAME = 'qualpack-v24-site-switch-1';
+const CACHE_NAME = 'qualpack-v24-site-switch-4';
 
 const APP_SHELL = [
   './',
