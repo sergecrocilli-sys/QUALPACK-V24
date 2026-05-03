@@ -5607,8 +5607,8 @@ async function confirmImportProduits() {
       ..._importPreviewData.map(r => r.ligne_prod),
       ...Object.keys(lineDetecteurMap)
     ].filter(Boolean);
-    mergeStoredLineCatalogue(importedLineNames);
-
+    saveStoredLineCatalogue(importedLineNames);
+    
    const lignesPayload = Array.from(
   new Set(importedLineNames.map(v => String(v || '').trim()).filter(Boolean))
 ).map(nom => ({
