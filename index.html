@@ -5251,12 +5251,8 @@ async function loadCatalogueFromSupabase() {
 
     OPERATEURS = mergeOperateursLists(ops, getLocalOperateursCache().length ? getLocalOperateursCache() : OPERATEURS);
     if (!OPERATEURS.length) {
-      OPERATEURS = [
-        {id:'op1', nom:'Pierre', role:'Operateur'},
-        {id:'op2', nom:'Paul', role:'Operateur'},
-        {id:'op3', nom:'Jacques', role:'Operateur'}
-      ];
-    }
+  OPERATEURS = [];
+}
     saveLocalOperateursCache(OPERATEURS);
 
     const prodsForCurrentSite = (prods || []).filter(p => !p.site_id || p.site_id === QUALPACK_SITE_ID);
