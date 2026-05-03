@@ -1968,9 +1968,9 @@ function saveLineDetecteurMap(map) {
 }
 
 function mergeLineDetecteurMappings(rows) { 
-  const current = getLineDetecteurMap();
-  let changed = false;
-  const detecteurs = [];
+  const current = {};
+  let changed = true;
+  const detecteurs = [];;
 
   (rows || []).forEach(r => {
     const line = String((r && (r.ligne_prod || r.ligne || r.LIGNE_PROD || r.LIGNE)) || '').trim();
