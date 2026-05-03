@@ -5229,7 +5229,9 @@ async function loadCatalogueFromSupabase() {
         localStorage.setItem(qpCacheKey('qp_catalogue'), JSON.stringify(CATALOGUE));
       }
     } else {
-  console.warn('Catalogue Supabase vide, conservation du catalogue local');
+  console.warn('Catalogue Supabase vide pour ce site, réinitialisation du catalogue local');
+  CATALOGUE = {};
+  localStorage.removeItem(qpCacheKey('qp_catalogue'));
 }
 
     OPERATEURS = mergeOperateursLists(ops, getLocalOperateursCache().length ? getLocalOperateursCache() : OPERATEURS);
