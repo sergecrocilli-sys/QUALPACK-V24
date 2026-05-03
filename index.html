@@ -5138,7 +5138,7 @@ function getLocalOperateursCache() {
 }
 
 function saveLocalOperateursCache(items) {
-  localStorage.setItem('qp_operateurs', JSON.stringify(items || []));
+  localStorage.setItem(qpCacheKey('qp_operateurs'), JSON.stringify(items || []));
 }
 
 function mergeOperateursLists(primary, secondary) {
