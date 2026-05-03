@@ -2034,11 +2034,15 @@ function getAllDetecteurOptions() {
     const det = String(v || '').trim();
     if (det) set.add(det);
   });
-  Object.values(CATALOGUE || {}).forEach(products => {
-    (products || []).forEach(p => {
-      const det = String((p && p.detecteur) || '').trim();
-      if (det) set.add(det);
-    });
+  const activeClient = document.getElementById('sel-client')?.value || '';
+const catalogueSources = activeClient
+  ? (CATALOGUE[activeClient] || [])
+  : Object.values(CATALOGUE || {}).flat();
+
+catalogueSources.forEach(p => {
+  const line = String((p && p.ligne_prod) || '').trim();
+  if (line) set.add(line);
+});
   });
   (dets || []).forEach(d => {
     const det = String((d && d.eq) || '').trim();
