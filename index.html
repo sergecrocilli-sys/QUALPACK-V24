@@ -2020,29 +2020,35 @@ function getLineForDetecteur(eq) {
 
 function getAllDetecteurOptions() {
   const set = new Set();
+
   getStoredDetecteurCatalogue().forEach(det => {
     const clean = String(det || '').trim();
     if (clean) set.add(clean);
   });
+
   Object.values(getLineDetecteurMap()).forEach(v => {
     const det = String(v || '').trim();
     if (det) set.add(det);
   });
+
   const activeClient = document.getElementById('sel-client')?.value || '';
   const catalogueSources = activeClient
-  ? (CATALOGUE[activeClient] || [])
-  : Object.values(CATALOGUE || {}).flat();
+    ? (CATALOGUE[activeClient] || [])
+    : Object.values(CATALOGUE || {}).flat();
 
   catalogueSources.forEach(p => {
-  const line = String((p && p.ligne_prod) || '').trim();
-  if (line) set.add(line);
-});
-  
-  (dets || []).forEach(d => {
-    const det = String((d && d.eq) || '').trim();
+    const det = String((p && p.detecteur) || '').trim();
     if (det) set.add(det);
   });
-  return Array.from(set).sort((a,b) => a.localeCompare(b, 'fr', {sensitivity:'base'}));
+
+  (dets || [])
+    .filter(d => !d.site_id || d.site_id === QUALPACK_SITE_ID)
+    .forEach(d => {
+      const det = String((d && d.eq) || '').trim();
+      if (det) set.add(det);
+    });
+
+  return Array.from(set).sort((a,b) => a.localeCompare(b, 'fr', { sensitivity:'base' }));
 }
 
 function populateDetecteurSelect(selectedValue = '', preferredValue = '') {
