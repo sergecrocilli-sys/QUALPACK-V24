@@ -5268,29 +5268,13 @@ function loadCatalogueFromCache() {
     getStoredLineCatalogue();
     if (cat) CATALOGUE = sanitizeCatalogue(JSON.parse(cat));
     if (ops) OPERATEURS = mergeOperateursLists(JSON.parse(ops), OPERATEURS);
-    // Fallback hardcodé si rien en cache
-    if (!Object.keys(CATALOGUE).length) {
-      CATALOGUE = {
-        'ALPHA': [
-          { id:'p1', nom:'POMME',  ...calcSeuils(200), ligne_prod:'', of_planifies:'' },
-          { id:'p4', nom:'FRAISE', ...calcSeuils(250), ligne_prod:'', of_planifies:'' }
-        ],
-        'BETA': [
-          { id:'p2', nom:'BANANE', ...calcSeuils(300), ligne_prod:'', of_planifies:'' }
-        ],
-        'OMEGA': [
-          { id:'p3', nom:'POIRE',  ...calcSeuils(500),  ligne_prod:'', of_planifies:'' },
-          { id:'p5', nom:'KIWI',   ...calcSeuils(1200), ligne_prod:'', of_planifies:'' }
-        ]
-      };
-    }
+   // Aucun catalogue de démonstration en version client
+if (!Object.keys(CATALOGUE).length) {
+  CATALOGUE = {};
+}
     if (!OPERATEURS.length) {
-      OPERATEURS = [
-        {id:'op1', nom:'Pierre', role:'Operateur'},
-        {id:'op2', nom:'Paul',   role:'Operateur'},
-        {id:'op3', nom:'Jacques',role:'Operateur'}
-      ];
-    }
+  OPERATEURS = [];
+}
   } catch(e) {
     console.warn('loadCatalogueFromCache error:', e);
   }
