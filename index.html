@@ -2000,11 +2000,21 @@ function getDetecteurForLine(line) {
 
   for (const cli of Object.keys(CATALOGUE || {})) {
     const products = CATALOGUE[cli] || [];
-    const prodMatch = products.find(p => String((p && p.ligne_prod) || '').trim() === key && String((p && p.detecteur) || '').trim());
+    const prodMatch = products.find(p =>
+      String((p && p.ligne_prod) || '').trim() === key &&
+      String((p && p.detecteur) || '').trim()
+    );
     if (prodMatch) return String(prodMatch.detecteur).trim();
   }
 
-  const detMatch = (dets || []).find(d => d && String((d.ligne_prod || d.ligne || '')).trim() === key && String(d.eq || '').trim());
+  const detMatch = (dets || [])
+    .filter(d => !d.site_id || d.site_id === QUALPACK_SITE_ID)
+    .find(d =>
+      d &&
+      String(d.ligne_prod || d.ligne || '').trim() === key &&
+      String(d.eq || '').trim()
+    );
+
   return detMatch ? String(detMatch.eq).trim() : '';
 }
 
