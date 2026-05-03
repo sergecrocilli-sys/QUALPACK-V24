@@ -2134,26 +2134,30 @@ function getAvailableLines() {
     if (clean) set.add(clean);
   });
 
-  Object.values(CATALOGUE || {}).forEach(products => {
-    (products || []).forEach(p => {
-      const line = String((p && p.ligne_prod) || '').trim();
-      if (line) set.add(line);
-    });
+  const activeClient = document.getElementById('sel-client')?.value || '';
+  const catalogueSources = activeClient
+    ? (CATALOGUE[activeClient] || [])
+    : Object.values(CATALOGUE || {}).flat();
+
+  catalogueSources.forEach(p => {
+    const line = String((p && p.ligne_prod) || '').trim();
+    if (line) set.add(line);
   });
 
   (sessions || [])
-  .filter(s => !s.site_id || s.site_id === QUALPACK_SITE_ID)
-  .forEach(s => {
-    const line = String((s && (s.ligne_prod || s.ligne)) || '').trim();
-    if (line) set.add(line);
-  });
+    .filter(s => !s.site_id || s.site_id === QUALPACK_SITE_ID)
+    .forEach(s => {
+      const line = String((s && (s.ligne_prod || s.ligne)) || '').trim();
+      if (line) set.add(line);
+    });
 
-(dets || [])
-  .filter(d => !d.site_id || d.site_id === QUALPACK_SITE_ID)
-  .forEach(d => {
-    const line = String((d && (d.ligne_prod || d.ligne)) || '').trim();
-    if (line) set.add(line);
-  });
+  (dets || [])
+    .filter(d => !d.site_id || d.site_id === QUALPACK_SITE_ID)
+    .forEach(d => {
+      const line = String((d && (d.ligne_prod || d.ligne)) || '').trim();
+      if (line) set.add(line);
+    });
+
   return Array.from(set).sort((a,b) => a.localeCompare(b, 'fr', {sensitivity:'base'}));
 }
 
