@@ -5244,10 +5244,21 @@ async function loadCatalogueFromSupabase() {
     }
     saveLocalOperateursCache(OPERATEURS);
 
-    mergeLineDetecteurMappings(prods || []);
-    mergeStoredDetecteurCatalogue((prods || []).map(p => String((p && p.detecteur) || '').trim()).filter(Boolean));
-    const fetchedLines = (lignes || []).map(l => String((l && (l.nom || l.nom_ligne || l.ligne_prod || l.ligne)) || '').trim()).filter(Boolean);
-    if (fetchedLines.length) saveStoredLineCatalogue(fetchedLines);
+    const prodsForCurrentSite = (prods || []).filter(p => !p.site_id || p.site_id === QUALPACK_SITE_ID);
+
+mergeLineDetecteurMappings(prodsForCurrentSite);
+
+saveStoredDetecteurCatalogue(
+  [...new Set(prodsForCurrentSite
+    .map(p => String((p && p.detecteur) || '').trim())
+    .filter(Boolean))]
+);
+
+const fetchedLines = (lignes || [])
+  .map(l => String((l && (l.nom || l.nom_ligne || l.ligne_prod || l.ligne)) || '').trim())
+  .filter(Boolean);
+
+saveStoredLineCatalogue([...new Set(fetchedLines)]);
     populateClientSelect();
     populateOpSelects();
     populateLineSelect('inp-ligne');
