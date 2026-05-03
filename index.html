@@ -5138,10 +5138,6 @@ function getLocalOperateursCache() {
 }
 
 function saveLocalOperateursCache(items) {
-  localStorage.setItem(qpCacheKey('qp_operateurs'), JSON.stringify(items || []));
-}
-
-function saveLocalOperateursCache(items) {
   localStorage.setItem('qp_operateurs', JSON.stringify(items || []));
 }
 
