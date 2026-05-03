@@ -2021,10 +2021,19 @@ function getDetecteurForLine(line) {
 function getLineForDetecteur(eq) {
   const equip = String(eq || '').trim();
   if (!equip) return '';
+
   const map = getLineDetecteurMap();
   const entry = Object.entries(map).find(([, det]) => String(det || '').trim() === equip);
   if (entry) return entry[0];
-  const detMatch = (dets || []).find(d => d && String(d.eq || '').trim() === equip && String((d.ligne_prod || d.ligne || '')).trim());
+
+  const detMatch = (dets || [])
+    .filter(d => !d.site_id || d.site_id === QUALPACK_SITE_ID)
+    .find(d =>
+      d &&
+      String(d.eq || '').trim() === equip &&
+      String((d.ligne_prod || d.ligne || '')).trim()
+    );
+
   return detMatch ? String(detMatch.ligne_prod || detMatch.ligne || '').trim() : '';
 }
 
