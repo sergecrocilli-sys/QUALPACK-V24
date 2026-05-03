@@ -1979,21 +1979,27 @@ function saveLineDetecteurMap(map) {
   }
 }
 
-function mergeLineDetecteurMappings(rows) {
+function mergeLineDetecteurMappings(rows) { 
   const current = getLineDetecteurMap();
   let changed = false;
   const detecteurs = [];
+
   (rows || []).forEach(r => {
     const line = String((r && (r.ligne_prod || r.ligne || r.LIGNE_PROD || r.LIGNE)) || '').trim();
     const det  = String((r && (r.detecteur || r.DETECTEUR || r.eq || r.nom_detecteur || r.NOM_DETECTEUR)) || '').trim();
+
     if (det) detecteurs.push(det);
+
     if (line && det && current[line] !== det) {
       current[line] = det;
       changed = true;
     }
   });
-  if (detecteurs.length) mergeStoredDetecteurCatalogue(detecteurs);
+
+  saveStoredDetecteurCatalogue([...new Set(detecteurs)]);
+
   if (changed) saveLineDetecteurMap(current);
+
   return current;
 }
 
