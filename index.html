@@ -5557,6 +5557,29 @@ async function confirmImportProduits() {
   try {
     const normalizeKey = v => String(v || '').trim().normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
 
+    // Nettoyage catalogue du site actif avant réimport
+await fetch(`${SB_URL}/rest/v1/produits?${qpSiteEqParam()}`, {
+  method: 'DELETE',
+  headers: SB_HDR
+});
+
+await fetch(`${SB_URL}/rest/v1/lignes?${qpSiteEqParam()}`, {
+  method: 'DELETE',
+  headers: SB_HDR
+});
+
+await fetch(`${SB_URL}/rest/v1/clients?${qpSiteEqParam()}`, {
+  method: 'DELETE',
+  headers: SB_HDR
+});
+
+// Nettoyage local du site actif
+CATALOGUE = {};
+localStorage.removeItem(qpCacheKey('qp_catalogue'));
+saveStoredLineCatalogue([]);
+saveStoredDetecteurCatalogue([]);
+saveLineDetecteurMap({});
+    
     const existingClientsRes = await fetch(`${SB_URL}/rest/v1/clients?select=id,nom&${qpSiteEqParam()}`, { headers: SB_HDR });
     if (!existingClientsRes.ok) throw new Error('Lecture clients impossible');
     const existingClients = await existingClientsRes.json();
