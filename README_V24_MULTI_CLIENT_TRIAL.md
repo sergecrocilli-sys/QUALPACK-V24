@@ -6,10 +6,6 @@ Version préparée à partir de QualPack V23 Public.
 
 Cette version permet d'utiliser une seule application GitHub Pages avec un seul projet Supabase QUALPACK, tout en séparant les données par client grâce au champ `site_id`.
 
-Exemples de liens :
-
-- Traiteur de la Thur : `https://ton-lien-github/qualpack/?site_id=traiteur_de_la_thur`
-- Moulin des Moines : `https://ton-lien-github/qualpack/?site_id=moulin_des_moines`
 
 ## Modifications intégrées
 
